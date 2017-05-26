@@ -91,7 +91,7 @@ def call(String apiName, String apiVersion="v1", String appVersion="1.0") {
 	
      if ((TARGET_ENV == 'int') && (RELEASE_BUILD_PKG == null || RELEASE_BUILD_PKG == "")) {
 
-        def GIT_URL = 'https://bitbucket.org/petcoalm/' + ARTIFACT_JOB_NAME +'.git'
+        def GIT_URL = 'https://bitbucket.org.git'
         def GIT_BRANCH = '*/develop'
         def MAVEN_GOALS = 'mvn clean -X dependency:tree package -Dbuild.nbr=' +  BUILD_NBR_TAG;
    
