@@ -41,7 +41,7 @@ stage("\u2776 Deploy ${menv}") {
                 else if (menv == "prd")
                   targetEnv = "Prf";
                 withCredentials([usernamePassword(credentialsId: 'Anypoint-IntegrationCOE', passwordVariable: 'ANYPOINT_PASSWORD', usernameVariable: 'ANYPOINT_USERNAME')]) {
-                    armDeploy(ANYPOINT_USERNAME,ANYPOINT_PASSWORD,"Integration Group",targetEnv,"${targetEnv}Group-1","petco-${menv.toLowerCase()}-${appName}",archiveLocation)
+                    armDeploy(ANYPOINT_USERNAME,ANYPOINT_PASSWORD,"Integration Group",targetEnv,"${targetEnv}Group-1","org-${menv.toLowerCase()}-${appName}",archiveLocation)
                }
            } finally {
                step([$class: 'Mailer', notifyEveryUnstableBuild: false, recipients: '', sendToIndividuals: true])
@@ -90,7 +90,7 @@ stage("\u2776 Deploy ${menv}") {
              // ignore any errors attempting to delete old test file
            }
            try {
-                bat "C:\\apache-jmeter-3.1\\bin\\jmeter.bat -Jjmeter.save.saveservice.output_format=xml -n -t ${testScript} -l target\\testResult.jtl -Japi.host=api-${menv}.petc.com"
+                bat "C:\\apache-jmeter-3.1\\bin\\jmeter.bat -Jjmeter.save.saveservice.output_format=xml -n -t ${testScript} -l target\\testResult.jtl -Japi.host=api-${menv}.org.com"
                 step([$class: 'XUnitPublisher', testTimeMargin: '4000', thresholdMode: 1, thresholds: [[$class: 'FailedThreshold', failureNewThreshold: '0', failureThreshold: '0', unstableNewThreshold: '0', unstableThreshold: '0'], [$class: 'SkippedThreshold', failureNewThreshold: '0', failureThreshold: '0', unstableNewThreshold: '0', unstableThreshold: '0']], tools: [[$class: 'CustomType', customXSL: 'D:\\workspace\\MULESOFT\\jmeter-to-xunit.xsl', deleteOutputFiles: true, failIfNotNew: false, pattern: 'target\\**\\testResult.jtl', skipNoTestFiles: true, stopProcessingIfError: false]]])
             } finally {
                 step([$class: 'Mailer', notifyEveryUnstableBuild: false, recipients: '', sendToIndividuals: true])
