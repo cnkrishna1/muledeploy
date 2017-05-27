@@ -1,6 +1,6 @@
 def call(appName, appVersion="1.0", apiName, apiVersion="v1", menv="int", buildNbrVersion, archiveLocation, testScript) {
 
-    def PING_URL = "http://api-${menv}.petc.com/${apiName}/${apiVersion}/ping";
+    def PING_URL = "http://api-${menv}.org.com/${apiName}/${apiVersion}/ping";
     def mule_client_id = "enter client id ";
     def mule_client_secret = "enter the client secret";
     Map<String, String> headers = new HashMap();
